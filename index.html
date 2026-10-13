@@ -1,45 +1,95 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Email Confirmed</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            darkbg: '#090d16',
+            cardbg: '#111827',
+            cardborder: 'rgba(255, 255, 255, 0.08)',
+          },
+          animation: {
+            'glow-pulse': 'glowPulse 4s ease-in-out infinite alternate',
+            'check-appear': 'checkAppear 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+          },
+          keyframes: {
+            glowPulse: {
+              '0%': { opacity: '0.4', transform: 'scale(1)' },
+              '100%': { opacity: '0.8', transform: 'scale(1.1)' }
+            },
+            checkAppear: {
+              '0%': { opacity: '0', transform: 'scale(0.5) rotate(-10deg)' },
+              '100%': { opacity: '1', transform: 'scale(1) rotate(0deg)' }
+            }
+          }
+        }
+      }
+    }
+  </script>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
     body {
-      margin: 0;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: Arial, sans-serif;
-      background: #f4f7fb;
-      color: #1f2937;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
     }
-    .card {
-      text-align: center;
-      background: white;
-      padding: 40px 25px;
-      margin: 20px;
-      border-radius: 16px;
-      max-width: 360px;
-      box-shadow: 0 5px 25px #0000000d;
+    .glass-card {
+      background: rgba(17, 24, 39, 0.75);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
     }
-    .check {
-      font-size: 48px;
-      color: #16a34a;
+    .check-path {
+      stroke-dasharray: 48;
+      stroke-dashoffset: 48;
+      animation: strokeDraw 0.7s cubic-bezier(0.65, 0, 0.45, 1) 0.2s forwards;
     }
-    h1 { font-size: 26px; }
-    p { color: #64748b; line-height: 1.6; }
+    @keyframes strokeDraw {
+      to {
+        stroke-dashoffset: 0;
+      }
+    }
   </style>
 </head>
-<body>
-  <div class="card">
-    <div class="check">✓</div>
-    <h1>Email Confirmed!</h1>
-    <p>Your email address has been successfully verified.</p>
-    <p>You can now return to the app and sign in.</p>
-    <p>You may close this page.</p>
+
+<body class="bg-darkbg text-slate-100 min-h-screen flex items-center justify-center p-4 relative overflow-hidden selection:bg-emerald-500/30 selection:text-emerald-200">
+
+  <div class="absolute -top-40 -left-40 w-96 h-96 bg-emerald-500/10 rounded-full blur-[120px] pointer-events-none animate-glow-pulse"></div>
+  <div class="absolute -bottom-40 -right-40 w-96 h-96 bg-teal-500/10 rounded-full blur-[120px] pointer-events-none animate-glow-pulse" style="animation-delay: 2s;"></div>
+
+  <div class="relative w-full max-w-sm glass-card border border-cardborder rounded-3xl p-8 sm:p-10 text-center z-10">
+    
+    <div class="mx-auto mb-6 flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-b from-emerald-500/20 to-emerald-500/5 border border-emerald-500/30 text-emerald-400 shadow-lg shadow-emerald-950/50 animate-check-appear">
+      <svg class="w-10 h-10" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path class="check-path" stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+      </svg>
+    </div>
+
+    <h1 class="text-2xl font-bold tracking-tight text-white mb-2">Email Confirmed</h1>
+    <p class="text-slate-400 text-sm leading-relaxed mb-6">
+      Your email address has been successfully verified.
+    </p>
+
+    <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold mb-6">
+      <span class="relative flex h-2 w-2">
+        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+        <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+      </span>
+      Verification Complete
+    </div>
+
+    <div class="pt-4 border-t border-white/5">
+      <p class="text-xs text-slate-500">
+        You may now safely close this window or tab.
+      </p>
+    </div>
+
   </div>
+
 </body>
 </html>
